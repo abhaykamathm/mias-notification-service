@@ -44,7 +44,9 @@ io.on("connection", (socket) => {
   console.log("New client connected");
 
   // Emit messages on client connection
-  emitMessages(socket);
+  socket.once("startNotifications", () => {
+    emitMessages(socket);
+  });
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
