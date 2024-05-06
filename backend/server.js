@@ -9,19 +9,34 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server, { cors: { origin: "*" } });
 
+const messages = require("./messages.json");
 const PORT = process.env.PORT || 4000;
 
-// Load messages from JSON file
-const messages = JSON.parse(fs.readFileSync("messages.json", "utf8"));
+const formatDateTime = (date) => {
+  return date.toLocaleString("en-GB", {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+};
 
 // Function to emit messages in a loop
 const emitMessages = () => {
   let index = 0;
 
   setInterval(() => {
-    io.emit("notification", messages[index]);
+    const currentDate = new Date();
+    const formattedDateTime = formatDateTime(currentDate);
+    const messageWithDateTime = {
+      message: messages[index],
+      dateTime: formattedDateTime,
+    };
+    io.emit("notification", messageWithDateTime);
     index = (index + 1) % messages.length;
-  }, 1000); // Change interval as needed
+  }, 5000); // Change interval as needed
 };
 
 // Initialize Socket.io
