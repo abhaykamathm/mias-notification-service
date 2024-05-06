@@ -34,7 +34,7 @@ const emitMessages = (socket) => {
       message: messages[index],
       dateTime: formattedDateTime,
     };
-    socket.broadcast.emit("notification", messageWithDateTime);
+    socket.broadcast.emit("startNotifications", messageWithDateTime);
     index = (index + 1) % messages.length;
   }, 5000); // Change interval as needed
 };
