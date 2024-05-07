@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     // Listen for notifications from the server
-    socket.on("startNotifications", (data) => {
+    socket.on("notification", (data) => {
       // console.log(data);
       setNotification((prevNotification) => data);
     });

@@ -24,7 +24,7 @@ const formatDateTime = (date) => {
 };
 
 // Function to emit messages in a loop
-const emitMessages = (socket) => {
+const emitMessages = () => {
   let index = 0;
 
   setInterval(() => {
@@ -34,27 +34,15 @@ const emitMessages = (socket) => {
       message: messages[index],
       dateTime: formattedDateTime,
     };
-    socket.broadcast.emit("startNotifications", messageWithDateTime);
+    io.emit("notification", messageWithDateTime);
+    console.log("Emitted");
     index = (index + 1) % messages.length;
   }, 5000); // Change interval as needed
 };
 
-// Initialize Socket.io
-io.on("connection", (socket) => {
-  console.log("New client connected");
-
-  // Emit messages on client connection
-  socket.once("startNotifications", () => {
-    emitMessages(socket);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
-
 app.use(cors()); // Enable CORS for all routes
 
 server.listen(PORT, () => {
+  emitMessages();
   console.log(`Server listening on port ${PORT}`);
 });
