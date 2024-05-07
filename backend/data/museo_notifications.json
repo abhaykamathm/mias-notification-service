@@ -1,0 +1,22 @@
+[
+  {
+    "type": "raiseHand",
+    "message": "Raise your hand to place a bid"
+  },
+  {
+    "type": "viewInAr",
+    "message": "View the Lot in AR"
+  },
+  {
+    "type": "fairWarning",
+    "message": "Fair warning alert"
+  },
+  {
+    "type": "estimateRecieved",
+    "message": "Estimate received"
+  },
+  {
+    "type": "sold",
+    "message": "SOLD"
+  }
+]
